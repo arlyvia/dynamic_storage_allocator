@@ -86,7 +86,7 @@ BlockHeader *mm_block_next(BlockHeader *bp) {
     int this_size = mm_block_size(bp);
 
     // TODO: to implement, look at get_prev
-    char *next_addr = NULL;
+    char *next_addr = (char *)bp + this_size;
 
     return (BlockHeader *)next_addr;
 }
