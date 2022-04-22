@@ -77,6 +77,22 @@ static void mm_list_next_set(BlockHeader *bp, BlockHeader *next) {
  */
 void mm_list_prepend(BlockHeader *bp) {
     // TODO: implement
+    
+    if(mm_list_headp == 0){
+        mm_list_prev_set(bp, 0);
+        mm_list_next_set(bp, 0);
+        mm_list_tailp = bp;
+        mm_list_headp = bp;
+    } else {
+        //set bp's prev to null
+        mm_list_prev_set(bp, 0);
+        //set bp's next to head ptr
+        mm_list_next_set(bp, mm_list_headp);
+        //set head ptr's prev to bp
+        mm_list_prev_set(mm_list_headp, bp);
+        //set head ptr to bp
+        mm_list_headp = bp;
+    }
 }
 
 /**
@@ -86,6 +102,23 @@ void mm_list_prepend(BlockHeader *bp) {
  */
 void mm_list_append(BlockHeader *bp) {
     // TODO: implement
+    
+    //check, if tail is null then set next and prev to null
+    if(mm_list_tailp == 0){
+        mm_list_prev_set(bp, 0);
+        mm_list_next_set(bp, 0);
+        mm_list_tailp = bp;
+        mm_list_headp = bp;
+    } else {
+        //set bp's prev to tail ptr
+        mm_list_prev_set(bp, mm_list_tailp);
+        //set bp's next to null
+        mm_list_next_set(bp, 0);
+        //set tail ptr's next to bp
+        mm_list_next_set(mm_list_tailp, bp);
+        //set tail ptr to bp
+        mm_list_tailp = bp;
+    }
 }
 
 /**
@@ -95,4 +128,40 @@ void mm_list_append(BlockHeader *bp) {
  */
 void mm_list_remove(BlockHeader *bp) {
     // TODO: implement
+
+    //current block to remove
+
+    //point prev node's "next" to curr node's next node
+    BlockHeader *prev = mm_list_prev(bp);
+    BlockHeader *next = mm_list_next(bp);
+
+    //if both dont exist/null, then bp was only block in list, set head and tail to null and return
+    if(*prev == 0 && *next == 0)
+    {
+        //mm_list_init();
+        mm_list_headp = 0;
+        mm_list_tailp = 0;
+    } 
+    //if prev doesn't exist, next does, bp is head, set next's prev to null mmlistprevset, set head to bp's next
+    else if (*prev == 0 && *next != 0)
+    {
+        bp = mm_list_headp;
+        mm_list_prev_set(next, 0);
+        mm_list_headp = next;
+    }
+    //if next doesn't exist and prev does, bp is tail, 
+    //set prev's next to null using mmlistnextset, set tailptr to prev
+    else if (*prev != 0 && *next == 0)
+    {
+        bp = mm_list_tailp;
+        mm_list_next_set(prev, 0);
+        mm_list_tailp = prev;
+    }
+    //if we have both prev and next, 
+    //somewhere in middle, set next's prev to prev and prev's next to next
+    else if (*prev != 0 && *next != 0)
+    {
+        mm_list_prev_set(next, prev);
+        mm_list_next_set(prev, next);
+    }
 }
