@@ -129,21 +129,19 @@ void mm_list_append(BlockHeader *bp) {
 void mm_list_remove(BlockHeader *bp) {
     // TODO: implement
 
-    //current block to remove
-
     //point prev node's "next" to curr node's next node
     BlockHeader *prev = mm_list_prev(bp);
     BlockHeader *next = mm_list_next(bp);
 
     //if both dont exist/null, then bp was only block in list, set head and tail to null and return
-    if(*prev == 0 && *next == 0)
+    if(prev == 0 && next == 0)
     {
         //mm_list_init();
         mm_list_headp = 0;
         mm_list_tailp = 0;
     } 
     //if prev doesn't exist, next does, bp is head, set next's prev to null mmlistprevset, set head to bp's next
-    else if (*prev == 0 && *next != 0)
+    else if (prev == 0 && next != 0)
     {
         bp = mm_list_headp;
         mm_list_prev_set(next, 0);
@@ -151,7 +149,7 @@ void mm_list_remove(BlockHeader *bp) {
     }
     //if next doesn't exist and prev does, bp is tail, 
     //set prev's next to null using mmlistnextset, set tailptr to prev
-    else if (*prev != 0 && *next == 0)
+    else if (prev != 0 && next == 0)
     {
         bp = mm_list_tailp;
         mm_list_next_set(prev, 0);
