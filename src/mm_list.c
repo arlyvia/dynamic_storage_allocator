@@ -157,7 +157,7 @@ void mm_list_remove(BlockHeader *bp) {
     }
     //if we have both prev and next, 
     //somewhere in middle, set next's prev to prev and prev's next to next
-    else if (*prev != 0 && *next != 0)
+    else if (prev != 0 && next != 0)
     {
         mm_list_prev_set(next, prev);
         mm_list_next_set(prev, next);
