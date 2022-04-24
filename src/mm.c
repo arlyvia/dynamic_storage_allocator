@@ -250,10 +250,10 @@ void *mm_realloc(void *ptr, size_t size) {
         mm_free(ptr);
         return new_ptr;*/
 
-        BlockHeader *ptr_block = (BlockHeader *)ptr-1;
-        BlockHeader *next_block = mm_block_next((BlockHeader *)ptr-1);
+        BlockHeader *ptr_block = (BlockHeader *)ptr - 1;
+        BlockHeader *next_block = mm_block_next(ptr_block);
 
-        int ptr_block_size = mm_block_size((BlockHeader *)ptr-1);
+        int ptr_block_size = mm_block_size(ptr_block);
         int next_size = mm_block_size(next_block);
         int required_size = required_block_size(size);
         int new_size = ptr_block_size + next_size;
